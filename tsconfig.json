@@ -7,7 +7,9 @@
       "@/config/*": ["src/config/*"],
       "@/containers/*": ["src/containers/*"],
       "@/pages/*": ["src/pages/*"],
-      "@/utils/*": ["src/utils/*"]
+      "@/utils/*": ["src/utils/*"],
+      "@/data/*": ["src/data/*"],
+      "@/model/*": ["src/model/*"]
     },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
