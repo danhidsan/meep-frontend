@@ -1,5 +1,7 @@
 // eslint-disable-next-line import/prefer-default-export
-export const request: <T>(url: string) => Promise<T> = async <T>(url: string) => {
+export const request: <T>(url: string) => Promise<T> = async <T>(
+  url: string,
+) => {
   try {
     const response = await fetch(url);
     if (response.ok) {

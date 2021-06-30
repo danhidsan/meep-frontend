@@ -26,12 +26,17 @@ const useResource = ({ bounds, zoom }: UseResourceParams) => {
       coordinates: [resource.x, resource.y],
     },
     properties: { resourceId: resource.id },
-  })) as PointFeature<{ resourceId: string }>[];
+  })) as PointFeature<{
+    resourceId: string;
+    cluster: boolean;
+    cluster_id?: number;
+    point_count: number;
+  }>[];
 
   const { clusters } = useSupercluster({ bounds, zoom, points: points ?? [] });
 
   return {
-    resources: !error && data ? data : [],
+    allPointsCount: data?.length ?? 0,
     isLoading: isValidating,
     clusters,
   };

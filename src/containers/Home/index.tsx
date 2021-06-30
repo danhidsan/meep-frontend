@@ -1,13 +1,13 @@
 import { FC, useCallback, useState } from 'react';
 import Map from 'google-map-react';
-import { Container } from '@/components';
+import { Container, Marker } from '@/components';
 import useResource, { Bound } from '@/data/hooks/useResource';
 import { Content, MapContainer } from './styles';
 
 const Home: FC = () => {
   const [bounds, setBounds] = useState<Bound>([] as unknown as Bound);
   const [zoom, setZoom] = useState<number>(10);
-  const { resources, clusters } = useResource({ bounds, zoom });
+  const { allPointsCount, clusters } = useResource({ bounds, zoom });
 
   const handleChangeMap = useCallback(
     ({ zoom: eventZoom, bounds: eventBounds }: Map.ChangeEventValue) => {
@@ -32,8 +32,18 @@ const Home: FC = () => {
             }}
             defaultCenter={{ lat: 38.7436883, lng: -9.1952225 }}
             zoom={11}
-            onChange={handleChangeMap}
-          />
+            onChange={handleChangeMap}>
+            {clusters.map((cluster) => (
+              <Marker
+                isCluster={cluster.properties.cluster}
+                pointCount={cluster.properties.point_count}
+                clusterId={cluster.properties.cluster_id}
+                allPointsCount={allPointsCount}
+                lat={cluster.geometry.coordinates[1]}
+                lng={cluster.geometry.coordinates[0]}
+              />
+            ))}
+          </Map>
         </MapContainer>
       </Content>
     </Container>
