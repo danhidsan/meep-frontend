@@ -1,5 +1,5 @@
 import useSwr from 'swr';
-import useSupercluster, { UseSuperclusterArgument } from 'use-supercluster';
+import useSupercluster from 'use-supercluster';
 import { PointFeature } from 'supercluster';
 import Resource from '@/model/resource';
 import { request } from '@/data/client';
@@ -15,7 +15,9 @@ export type UseResourceParams = {
 };
 
 const useResource = ({ bounds, zoom }: UseResourceParams) => {
-  const { data, error, isValidating } = useSwr<Resource[]>(URL, { fetcher: request });
+  const { data, error, isValidating } = useSwr<Resource[]>(URL, {
+    fetcher: request,
+  });
 
   const points = data?.map((resource) => ({
     type: 'Feature',
@@ -28,7 +30,11 @@ const useResource = ({ bounds, zoom }: UseResourceParams) => {
 
   const { clusters } = useSupercluster({ bounds, zoom, points: points ?? [] });
 
-  return { resources: !error && data ? data : [], isLoading: isValidating, clusters };
+  return {
+    resources: !error && data ? data : [],
+    isLoading: isValidating,
+    clusters,
+  };
 };
 
 export default useResource;
