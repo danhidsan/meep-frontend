@@ -1,5 +1,6 @@
 import { FC } from 'react';
-import { Container, Count, MarkerIcon } from './styles';
+import ResourceMarker from './ResourceMarker';
+import { Container, Count } from './styles';
 import { Props } from './types';
 
 const Marker: FC<Props> = ({
@@ -13,7 +14,7 @@ const Marker: FC<Props> = ({
       <Count>{pointCount}</Count>
     </Container>
   ) : (
-    <MarkerIcon batteryLevel={batteryLevel} />
+    <ResourceMarker batteryLevel={batteryLevel} />
   );
 
 export default Marker;

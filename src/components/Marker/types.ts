@@ -12,7 +12,3 @@ export type ContainerProps = {
   pointCount: Props['pointCount'];
   allPointsCount: number;
 };
-
-export type MarkerIconProps = {
-  batteryLevel: Props['batteryLevel'];
-};
