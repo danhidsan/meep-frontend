@@ -5,6 +5,7 @@ export type ResourceData = {
   y: number;
   model: string;
   resourceType: 'MOPED';
+  batteryLevel: number;
 };
 
 type Resource = ResourceData;

@@ -41,6 +41,7 @@ const Home: FC = () => {
                 allPointsCount={allPointsCount}
                 lat={cluster.geometry.coordinates[1]}
                 lng={cluster.geometry.coordinates[0]}
+                batteryLevel={cluster.properties.batteryLevel}
               />
             ))}
           </Map>

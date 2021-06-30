@@ -5,9 +5,14 @@ export type Props = {
   allPointsCount: number;
   lat: number;
   lng: number;
+  batteryLevel: number;
 };
 
 export type ContainerProps = {
   pointCount: Props['pointCount'];
   allPointsCount: number;
+};
+
+export type MarkerIconProps = {
+  batteryLevel: Props['batteryLevel'];
 };

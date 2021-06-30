@@ -25,15 +25,24 @@ const useResource = ({ bounds, zoom }: UseResourceParams) => {
       type: 'Point',
       coordinates: [resource.x, resource.y],
     },
-    properties: { resourceId: resource.id },
+    properties: {
+      resourceId: resource.id,
+      batteryLevel: resource.batteryLevel,
+    },
   })) as PointFeature<{
     resourceId: string;
+    batteryLevel: number;
     cluster: boolean;
     cluster_id?: number;
     point_count: number;
   }>[];
 
-  const { clusters } = useSupercluster({ bounds, zoom, points: points ?? [] });
+  const { clusters } = useSupercluster({
+    bounds,
+    zoom,
+    points: points ?? [],
+    options: { radius: 75, maxZoom: 20 },
+  });
 
   return {
     allPointsCount: data?.length ?? 0,
