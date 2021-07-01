@@ -1,4 +1,4 @@
-import { FC, useState, useCallback } from 'react';
+import { FC, useState, useCallback, memo } from 'react';
 import { Props } from './types';
 import { Container, MarkerIcon, Modal, Text } from './styles';
 
@@ -19,4 +19,4 @@ const ResourceMarker: FC<Props> = ({ batteryLevel }) => {
   );
 };
 
-export default ResourceMarker;
+export default memo(ResourceMarker);

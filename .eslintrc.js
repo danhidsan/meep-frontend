@@ -43,15 +43,14 @@ module.exports = {
       // Rules that apply only to typescript files should go here
       rules: {
         '@typescript-eslint/no-var-requires': 0,
-        // Disabled because as of React 17 this is not necessary
+        '@typescript-eslint/ban-ts-comment': 0,
         'react/react-in-jsx-scope': 'off',
         'react/jsx-props-no-spreading': 'off',
-        // Disabled because we use TypeScript, so we don't care about PropTypes
         'react/prop-types': 'off',
         'no-warning-comments': 'warn',
-        // Extend the rule already enabled by airbnb with "props: true"
         'no-param-reassign': 'error',
         '@typescript-eslint/explicit-module-boundary-types': 'off',
+        'react-hooks/exhaustive-deps': 'error',
       },
     },
   ],

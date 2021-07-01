@@ -3,6 +3,7 @@ export type ResourceData = {
   licencePlate: string;
   x: number;
   y: number;
+  coordinatesStr: string;
   model: string;
   resourceType: 'MOPED';
   batteryLevel: number;
