@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import useSwr from 'swr';
 import useSupercluster from 'use-supercluster';
 import { PointFeature } from 'supercluster';
@@ -19,23 +20,27 @@ const useResource = ({ bounds, zoom }: UseResourceParams) => {
     fetcher: request,
   });
 
-  const points = data?.map((resource) => ({
-    type: 'Feature',
-    geometry: {
-      type: 'Point',
-      coordinates: [resource.x, resource.y],
-    },
-    properties: {
-      resourceId: resource.id,
-      batteryLevel: resource.batteryLevel,
-    },
-  })) as PointFeature<{
-    resourceId: string;
-    batteryLevel: number;
-    cluster: boolean;
-    cluster_id?: number;
-    point_count: number;
-  }>[];
+  const points = useMemo(
+    () =>
+      data?.map((resource) => ({
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [resource.x, resource.y],
+        },
+        properties: {
+          resourceId: resource.id,
+          batteryLevel: resource.batteryLevel,
+        },
+      })) as PointFeature<{
+        resourceId: string;
+        batteryLevel: number;
+        cluster: boolean;
+        cluster_id?: number;
+        point_count: number;
+      }>[],
+    [data],
+  );
 
   const { clusters } = useSupercluster({
     bounds,

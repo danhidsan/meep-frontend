@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import ResourceMarker from './ResourceMarker';
 import { Container, Count } from './styles';
 import { Props } from './types';
@@ -17,4 +17,4 @@ const Marker: FC<Props> = ({
     <ResourceMarker batteryLevel={batteryLevel} />
   );
 
-export default Marker;
+export default memo(Marker);

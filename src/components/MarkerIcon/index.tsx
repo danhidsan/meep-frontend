@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import { colors } from '@/theme';
 
 type Props = {
@@ -20,4 +20,4 @@ const MarkerIcon: FC<Props> = ({ color = colors.limeGreen }) => {
   );
 };
 
-export default MarkerIcon;
+export default memo(MarkerIcon);

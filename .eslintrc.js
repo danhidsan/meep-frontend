@@ -52,6 +52,7 @@ module.exports = {
         // Extend the rule already enabled by airbnb with "props: true"
         'no-param-reassign': 'error',
         '@typescript-eslint/explicit-module-boundary-types': 'off',
+        'react-hooks/exhaustive-deps': 'error',
       },
     },
   ],
