@@ -1,7 +1,10 @@
-import { FC, memo, useMemo } from 'react';
-import { useTable, usePagination } from 'react-table';
+// @ts-nocheck
+import { FC, memo, useMemo, useCallback } from 'react';
+import { useTable, usePagination, useSortBy } from 'react-table';
+import Pagination from './Pagination';
 import { Props } from './types';
-import { Container } from './styles';
+import { Container, Sorted } from './styles';
+import 'bootstrap/dist/css/bootstrap.css';
 
 const Table: FC<Props> = ({ data }) => {
   const columns = useMemo(
@@ -21,7 +24,6 @@ const Table: FC<Props> = ({ data }) => {
     ],
     [],
   );
-
   const {
     columns: tableColumns,
     prepareRow,
@@ -33,22 +35,49 @@ const Table: FC<Props> = ({ data }) => {
     gotoPage,
     nextPage,
     previousPage,
-    setPageSize,
-    state: { pageIndex, pageSize },
-  } = useTable({ columns, data, initialState: {} }, usePagination);
+    state: { pageIndex },
+  } = useTable<typeof data[0]>(
+    { columns, data, initialState: {} },
+    useSortBy,
+    usePagination,
+  );
+
+  const handleStart = useCallback(() => {
+    gotoPage(0);
+  }, [gotoPage]);
+
+  const handleEnd = useCallback(() => {
+    gotoPage(pageCount - 1);
+  }, [gotoPage, pageCount]);
+
+  const handleChangePagination = useCallback(
+    (e) => {
+      const next = e.target.value ? Number(e.target.value) - 1 : 0;
+      gotoPage(next);
+    },
+    [gotoPage],
+  );
 
   return (
     <Container>
-      <table>
+      <table className="table table-hover">
         <thead>
           <tr>
             {tableColumns.map((column) => (
-              <th>{column.Header}</th>
+              <th
+                className="th-sm"
+                {...column.getHeaderProps(column.getSortByToggleProps())}>
+                {column.Header}
+                <Sorted
+                  isSorted={column.isSorted}
+                  isDesc={column.isSortedDesc}
+                />
+              </th>
             ))}
           </tr>
         </thead>
         <tbody>
-          {page.map((row, i) => {
+          {page.map((row) => {
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
@@ -62,61 +91,17 @@ const Table: FC<Props> = ({ data }) => {
           })}
         </tbody>
       </table>
-      <div className="pagination">
-        <button
-          type="button"
-          onClick={() => gotoPage(0)}
-          disabled={!canPreviousPage}>
-          {'<<'}
-        </button>{' '}
-        <button
-          type="button"
-          onClick={() => previousPage()}
-          disabled={!canPreviousPage}>
-          {'<'}
-        </button>{' '}
-        <button
-          type="button"
-          onClick={() => nextPage()}
-          disabled={!canNextPage}>
-          {'>'}
-        </button>{' '}
-        <button
-          type="button"
-          onClick={() => gotoPage(pageCount - 1)}
-          disabled={!canNextPage}>
-          {'>>'}
-        </button>{' '}
-        <span>
-          Page{' '}
-          <strong>
-            {pageIndex + 1} of {pageOptions.length}
-          </strong>{' '}
-        </span>
-        <span>
-          | Go to page:{' '}
-          <input
-            type="number"
-            defaultValue={pageIndex + 1}
-            onChange={(e) => {
-              const inputPage = e.target.value ? Number(e.target.value) - 1 : 0;
-              gotoPage(inputPage);
-            }}
-            style={{ width: '100px' }}
-          />
-        </span>{' '}
-        <select
-          value={pageSize}
-          onChange={(e) => {
-            setPageSize(Number(e.target.value));
-          }}>
-          {[10, 20, 30, 40, 50].map((size) => (
-            <option key={size} value={size}>
-              Show {size}
-            </option>
-          ))}
-        </select>
-      </div>
+      <Pagination
+        onEnd={handleEnd}
+        onStart={handleStart}
+        onNext={nextPage}
+        onPrevius={previousPage}
+        onChange={handleChangePagination}
+        pageIndex={pageIndex}
+        canNextPage={canNextPage}
+        canPreviousPage={canPreviousPage}
+        pageOptionsLength={pageOptions.length}
+      />
     </Container>
   );
 };
