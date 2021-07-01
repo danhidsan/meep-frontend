@@ -1,13 +1,13 @@
 import { FC, useCallback, useState } from 'react';
 import Map from 'google-map-react';
-import { Container, Marker } from '@/components';
+import { Container, Marker, Table } from '@/components';
 import useResource, { Bound } from '@/data/hooks/useResource';
 import { Content, MapContainer } from './styles';
 
 const Home: FC = () => {
   const [bounds, setBounds] = useState<Bound>([] as unknown as Bound);
   const [zoom, setZoom] = useState<number>(10);
-  const { allPointsCount, clusters } = useResource({ bounds, zoom });
+  const { allPointsCount, clusters, resources } = useResource({ bounds, zoom });
 
   const handleChangeMap = useCallback(
     ({ zoom: eventZoom, bounds: eventBounds }: Map.ChangeEventValue) => {
@@ -46,6 +46,7 @@ const Home: FC = () => {
             ))}
           </Map>
         </MapContainer>
+        <Table data={resources} />
       </Content>
     </Container>
   );

@@ -16,9 +16,19 @@ export type UseResourceParams = {
 };
 
 const useResource = ({ bounds, zoom }: UseResourceParams) => {
-  const { data, error, isValidating } = useSwr<Resource[]>(URL, {
+  const { data, isValidating } = useSwr<Resource[]>(URL, {
     fetcher: request,
   });
+
+  const resources = useMemo(
+    () =>
+      data?.map((resource) => ({
+        plate: resource.licencePlate,
+        coordinates: `${resource.x}, ${resource.y}`,
+        model: resource.model,
+      })),
+    [data],
+  );
 
   const points = useMemo(
     () =>
@@ -53,6 +63,7 @@ const useResource = ({ bounds, zoom }: UseResourceParams) => {
     allPointsCount: data?.length ?? 0,
     isLoading: isValidating,
     clusters,
+    resources: resources ?? [],
   };
 };
 
