@@ -26,6 +26,7 @@ const useResource = ({ bounds, zoom }: UseResourceParams) => {
         plate: resource.licencePlate,
         coordinates: `${resource.x}, ${resource.y}`,
         model: resource.model,
+        resourceType: resource.resourceType,
       })),
     [data],
   );
@@ -41,6 +42,7 @@ const useResource = ({ bounds, zoom }: UseResourceParams) => {
         properties: {
           resourceId: resource.id,
           batteryLevel: resource.batteryLevel,
+          resourceType: resource.resourceType,
         },
       })) as PointFeature<{
         resourceId: string;
@@ -48,6 +50,7 @@ const useResource = ({ bounds, zoom }: UseResourceParams) => {
         cluster: boolean;
         cluster_id?: number;
         point_count: number;
+        resourceType: string;
       }>[],
     [data],
   );
