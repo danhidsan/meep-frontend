@@ -44,7 +44,7 @@ const Home: FC = () => {
       }),
     );
 
-    return [{ header: 'Resource Type', data: filtersData }];
+    return [{ header: 'Tipo de recurso', data: filtersData }];
   }, [resources]);
 
   return (

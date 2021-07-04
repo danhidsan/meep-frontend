@@ -8,6 +8,6 @@ export const Content = styled.div`
 `;
 
 export const MapContainer = styled.div`
-  width: 600px;
+  width: 65%;
   height: 100vh;
 `;

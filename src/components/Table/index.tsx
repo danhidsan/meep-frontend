@@ -18,7 +18,7 @@ const Table: FC<Props> = ({ data }) => {
         accessor: 'coordinates',
       },
       {
-        Header: 'Model',
+        Header: 'Modelo',
         accessor: 'model',
       },
     ],

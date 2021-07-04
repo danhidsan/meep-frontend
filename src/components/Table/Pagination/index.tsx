@@ -23,7 +23,7 @@ const Pagination: FC<Props> = ({
               className="page-link"
               onClick={onStart}
               disabled={!canPreviousPage}>
-              start
+              inicio
             </button>
           </li>
           <li className="page-item">
@@ -32,7 +32,7 @@ const Pagination: FC<Props> = ({
               className="page-link"
               onClick={onPrevius}
               disabled={!canPreviousPage}>
-              previous
+              anterior
             </button>
           </li>
           <li className="page-item">
@@ -41,7 +41,7 @@ const Pagination: FC<Props> = ({
               className="page-link"
               onClick={onNext}
               disabled={!canNextPage}>
-              next
+              siguiente
             </button>
           </li>
           <li className="page-item">
@@ -50,7 +50,7 @@ const Pagination: FC<Props> = ({
               className="page-link"
               onClick={onEnd}
               disabled={!canNextPage}>
-              end
+              final
             </button>
           </li>
         </ul>

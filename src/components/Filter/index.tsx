@@ -10,7 +10,12 @@ const Filter: FC<Props> = ({ items, onClickCheck }) => (
         <Header>{group.header}</Header>
         <>
           {group.data.map((item) => (
-            <Item id={item.id} text={item.text} onClick={onClickCheck} />
+            <Item
+              key={item.id}
+              id={item.id}
+              text={item.text}
+              onClick={onClickCheck}
+            />
           ))}
         </>
       </>
