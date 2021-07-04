@@ -8,7 +8,10 @@ const ResourceMarker: FC<Props> = ({ batteryLevel }) => {
     setShowModal((prev) => !prev);
   }, []);
   return (
-    <Container onMouseEnter={handleShowModal} onMouseLeave={handleShowModal}>
+    <Container
+      data-testid="resource-marker"
+      onMouseEnter={handleShowModal}
+      onMouseLeave={handleShowModal}>
       {showModal && (
         <Modal>
           <Text>{`Battery: ${batteryLevel}%`}</Text>
