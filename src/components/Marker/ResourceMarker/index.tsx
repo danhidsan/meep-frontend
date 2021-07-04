@@ -14,7 +14,7 @@ const ResourceMarker: FC<Props> = ({ batteryLevel }) => {
       onMouseLeave={handleShowModal}>
       {showModal && (
         <Modal>
-          <Text>{`Battery: ${batteryLevel}%`}</Text>
+          <Text>{`Batería: ${batteryLevel}%`}</Text>
         </Modal>
       )}
       <MarkerIcon batteryLevel={batteryLevel} />
