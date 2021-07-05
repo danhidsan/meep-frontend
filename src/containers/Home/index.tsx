@@ -47,40 +47,45 @@ const Home: FC = () => {
     return [{ header: 'Tipo de recurso', data: filtersData }];
   }, [resources]);
 
+  const memoMap = useMemo(
+    () => (
+      <Map
+        bootstrapURLKeys={{
+          key: 'AIzaSyAdt0dsgpnnUoAmgQSPrsW_-sZS7X-WTVE',
+        }}
+        defaultCenter={{ lat: 38.7436883, lng: -9.1952225 }}
+        zoom={11}
+        onChange={handleChangeMap}>
+        {clusters.map((cluster) =>
+          cluster.properties.cluster ||
+          isEmpty(filters) ||
+          filters.includes(cluster.properties.resourceType) ? (
+            <Marker
+              key={`${
+                cluster.properties.cluster
+                  ? cluster.properties.cluster_id
+                  : cluster.properties.resourceId
+              }`}
+              isCluster={cluster.properties.cluster}
+              pointCount={cluster.properties.point_count}
+              clusterId={cluster.properties.cluster_id}
+              allPointsCount={allPointsCount}
+              lat={cluster.geometry.coordinates[1]}
+              lng={cluster.geometry.coordinates[0]}
+              batteryLevel={cluster.properties.batteryLevel}
+            />
+          ) : null,
+        )}
+      </Map>
+    ),
+    [allPointsCount, clusters, filters, handleChangeMap],
+  );
+
   return (
     <Container>
       <Content>
         <Filter items={filterItems} onClickCheck={handleClickCheck} />
-        <MapContainer>
-          <Map
-            bootstrapURLKeys={{
-              key: 'AIzaSyAdt0dsgpnnUoAmgQSPrsW_-sZS7X-WTVE',
-            }}
-            defaultCenter={{ lat: 38.7436883, lng: -9.1952225 }}
-            zoom={11}
-            onChange={handleChangeMap}>
-            {clusters.map((cluster) =>
-              cluster.properties.cluster ||
-              isEmpty(filters) ||
-              filters.includes(cluster.properties.resourceType) ? (
-                <Marker
-                  key={`${
-                    cluster.properties.cluster
-                      ? cluster.properties.cluster_id
-                      : cluster.properties.resourceId
-                  }`}
-                  isCluster={cluster.properties.cluster}
-                  pointCount={cluster.properties.point_count}
-                  clusterId={cluster.properties.cluster_id}
-                  allPointsCount={allPointsCount}
-                  lat={cluster.geometry.coordinates[1]}
-                  lng={cluster.geometry.coordinates[0]}
-                  batteryLevel={cluster.properties.batteryLevel}
-                />
-              ) : null,
-            )}
-          </Map>
-        </MapContainer>
+        <MapContainer>{memoMap}</MapContainer>
         <Table data={resources} />
       </Content>
     </Container>
